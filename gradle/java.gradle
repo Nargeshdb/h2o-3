@@ -1,14 +1,26 @@
 // Gradle file for java-based project
 //
+//apply plugin: 'google'
 apply plugin: 'java'
+apply plugin: 'org.checkerframework'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-compileJava { 
-  options.debug = true
-  options.encoding = "UTF-8"
+compileJava {
+    options.debug = true
+    options.encoding = "UTF-8"
 }
+
+
+repositories {
+    mavenLocal()
+
+    maven { url "https://plugins.gradle.org/m2/" }
+}
+
+apply plugin: 'org.checkerframework'
+
 
 java {
     withJavadocJar()
@@ -27,6 +39,18 @@ if (JavaVersion.current().isJava8Compatible()) {
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
     }
+}
+
+checkerFramework {
+    checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
+    extraJavacArgs = ['-AsuppressWarnings=type.anno.before']
+}
+
+dependencies {
+    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.10-SNAPSHOT'
+    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.10-SNAPSHOT'
+//    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.9'
+//    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.9'
 }
 
 clean {

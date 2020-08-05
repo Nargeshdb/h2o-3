@@ -1,9 +1,10 @@
 apply plugin: 'java'
-
+//id "org.checkerframework" version "0.5.1"
 //
 // H2O Core Module
 //
 description = "H2O Core"
+
 
 dependencies {
   // Dependency on shared model support
@@ -21,16 +22,16 @@ dependencies {
   compile project(":h2o-jaas-pam")
 
   compile("log4j:log4j:1.2.17") {
-    exclude module: "activation" 
-    exclude module: "jms" 
-    exclude module: "jmxri" 
-    exclude module: "jmxtools" 
-    exclude module: "mail" 
+    exclude module: "activation"
+    exclude module: "jms"
+    exclude module: "jmxri"
+    exclude module: "jmxtools"
+    exclude module: "mail"
   }
 
   compile "com.google.code.gson:gson:2.6.2"
   compile 'commons-lang:commons-lang:2.6'
-  
+
   // Duke library: collection of String comparators
   compile('no.priv.garshol.duke:duke:1.2') {
     exclude group: 'org.apache.lucene', module: 'lucene-core'
@@ -42,6 +43,9 @@ dependencies {
   testCompile project(':h2o-test-support')
   testRuntimeOnly project(":${defaultWebserverModule}")
   testCompileOnly "javax.servlet:javax.servlet-api:3.0.1"
+
+
+
 }
 
 apply from: "${rootDir}/gradle/dataCheck.gradle"
@@ -85,9 +89,10 @@ task generateBuildVersionJava {
 compileJava.dependsOn generateBuildVersionJava
 
 task cleanBuildVersionJava(type: Delete) {
-    delete buildVersionFile
+  delete buildVersionFile
 }
 
 clean.dependsOn cleanBuildVersionJava
 
 apply from: '../gradle/javaIgnoreSymbolFile.gradle'
+
